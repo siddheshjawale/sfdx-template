@@ -1,0 +1,464 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Retrieve Package.xml",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:retrieve",
+                "-x",
+                "package.xml"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Deploy Package.xml (Without Test Classes)",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:deploy",
+                "-u",
+                "${input:targetenvironment}",
+                "-x",
+                "package.xml"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Deploy Package.xml (With Test Classes)",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:deploy",
+                "-u",
+                "${input:targetenvironment}",
+                "-x",
+                "package.xml",
+                "--checkonly",
+                "-l",
+                "RunSpecifiedTests",
+                "-r",
+                "${input:testclassnames}",
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Connect Org To Device",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:auth:device:login"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Update CLI",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "update"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "List Connected Orgs",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:org:list"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "List Core Plugins",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "plugins",
+                "--core"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Override Project API Version",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:config:set",
+                "apiVersion=51.0"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Retrieve ChangeSet",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:retrieve",
+                "-n",
+                "${input:changesetname}",
+                "-u",
+                "${input:sourceenvironment}"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Deploy ChangeSet",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:deploy",
+                "-p",
+                "${input:changesetname}/main/default",
+                "-u",
+                "${input:targetenvironment}"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Log Out of ORG",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "auth:logout",
+                "--targetusername",
+                "${input:orgalias}"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Enable REST Deploy",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "config:set",
+                "restDeploy=true"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Disable REST Deploy",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "config:set",
+                "restDeploy=false"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Assign Permission Sets",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:user:permset:assign",
+                "-n",
+                "${input:permissionsetname}"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Import Sample Data",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:data:tree:import",
+                "-p",
+                "${file}"
+            ]
+        },
+        {
+            "label": "Create Scratch org",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:org:create",
+                "-s",
+                "-f",
+                "config/project-scratch-def.json",
+                "-a",
+                "easyspaces"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Push Source To Scratch org",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:source:push"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Import Lead Data",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:data:tree:import",
+                "-p",
+                "./data/Plan1.json"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Import All Data",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:data:tree:import",
+                "-p",
+                "./data/Plan2.json"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Initialize Scratch Org",
+            "type": "shell",
+            "dependsOn": [
+                "Create Scratch org",
+                "Push Source To Scratch org",
+                "Assign Permission Sets",
+                "Import Lead Data",
+                "Import All Data"
+            ],
+            "group": "build",
+            "dependsOrder": "sequence",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+            }
+        },
+        {
+            "label": "SFDX: Tail Logs",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "force:apex:log:tail",
+                "-c",
+                ">",
+                "output.text"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "SFDX: Run Security Scan on Current File",
+            "type": "shell",
+            "command": "sfdx",
+            "args": [
+                "scanner:run",
+                "-t",
+                "${relativeFile}",
+                "-c",
+                "Security"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "permissionsetname",
+            "description": "Enter Permission Set Name",
+            "type": "promptString"
+        },
+        {
+            "id": "changesetname",
+            "description": "Enter Change Set Name",
+            "type": "promptString"
+        },
+        {
+            "id": "sourceenvironment",
+            "description": "Enter Source Environment Alias/Username",
+            "type": "promptString"
+        },
+        {
+            "id": "targetenvironment",
+            "description": "Enter Target Environment Alias/Username",
+            "type": "promptString"
+        },
+        {
+            "id": "orgalias",
+            "description": "Enter ORG Alias",
+            "type": "promptString"
+        },
+        {
+            "id": "testclassnames",
+            "description": "Enter Test Class Names separated by Comma",
+            "type": "promptString"
+        }
+    ]
+}
